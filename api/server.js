@@ -2,9 +2,11 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const session = require("express-session");
+// persistance from here
 const KnexSessionStore = require("connect-session-knex")(session); //needs the express session library to run
 
 const dbConfig = require("../database/dbConfig");
+// to here
 const usersRouter = require("../users/users-router.js");
 const authRouter = require("../auth/auth_router.js");
 const restricted = require("../auth/restricted-middleware");
@@ -21,6 +23,8 @@ const sessionConfig = {
     },
     resave: false,
     saveUninitialized: true, // GDPR laws require to checkwith client before
+
+    // persistance here
     store: new KnexSessionStore({
         knex: dbConfig, // configured instance of knex
         createTable: true, // if the table does not exist, creates automatically
